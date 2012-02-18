@@ -70,6 +70,31 @@ console.log("first step");
 console.log("good");
 */
 
+//socket.io dependency
+io.sockets.on('connection', function (socket) {
+  socket.on('receive', function (data){
+  myModel.findOne({userID: data.userID}, function (err, user){
+		if (err){
+			throw err;
+		}
+		if (user){
+			user.goals[data.goal.name] = data.goal;
+			user.save();
+		}else{
+			var temp = new myModel();
+			temp.userID = user.userID;
+			temp.goals[data.goal.name] = data.goal;
+			temp.save();
+		}
+	  });
+  setTimeout(function(){
+	///now still keep the goal in the goals array
+	socket.emit(data.userID, data.goal);
+  }, data.goal.expire);
+  });
+});
+
+
 var base64ToString = function(str) {
 	return (new Buffer(str || "", "base64")).toString("ascii");
 };
