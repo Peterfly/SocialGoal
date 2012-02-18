@@ -101,7 +101,7 @@ function handlePOSTData(req, res) {
 	}
 	else
 	{
-		if (data.algorithm.toUpperCase() != 'HMAC-SHA256')) {
+		if (data.algorithm.toUpperCase() != 'HMAC-SHA256') {
 		  res.end('Error: Unknown algorithm');
 		  console.log("unknown algorithm");
 		  return;
