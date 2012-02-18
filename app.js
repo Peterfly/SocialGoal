@@ -4,7 +4,7 @@
  */
 var https	= require('https'),
 	crypto	= require('crypto'),
-	url 	= require('url');
+	querystring 	= require('querystring');
 	
 var express = require('express')
   , routes = require('./routes');
@@ -127,7 +127,7 @@ function handleAuthData(req, res) {
 								secret + "&code=" + data }, 
 		function(response) {
 			response.on('data', function (chunk) {
-				access_token = url.parse(chunk, true).query.access_token;
+				access_token = querystring.parse(chunk);
 				console.log(access_token);
 			});
 		});
