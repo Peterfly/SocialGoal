@@ -1,14 +1,36 @@
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
 
 <span id="user-info" style="border:1px solid #888"></span>
-    <span id="fb-root"></span>
+    <div id="fb-root"></span>
 
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
-    <script src="http://connect.facebook.net/en_US/all.js"></script>
+	<script>
+	  window.fbAsyncInit = function() {
+		FB.init({
+		  appId      : '369903096353188', // App ID
+		  channelUrl : '//ec2-184-169-254-137.us-west-1.compute.amazonaws.com/channel.html', // Channel File
+		  status     : true, // check login status
+		  cookie     : true, // enable cookies to allow the server to access the session
+		  xfbml      : true  // parse XFBML
+		});
+
+		// Additional initialization code here
+	  };
+
+	  // Load the SDK Asynchronously
+	  (function(d){
+		 var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+		 if (d.getElementById(id)) {return;}
+		 js = d.createElement('script'); js.id = id; js.async = true;
+		 js.src = "//connect.facebook.net/en_US/all.js";
+		 ref.parentNode.insertBefore(js, ref);
+	   }(document));
+	</script>
+	
     <script>
         // initialize the library with the API key
-        // FB.init({ appId:'369903096353188' });
+        FB.init({ appId:'369903096353188' });
 
         // fetch the status on load
         FB.getLoginStatus(handleSessionResponse);
