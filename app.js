@@ -81,10 +81,13 @@ function parse_post(req, callback) {
   // Pushing things into an array and joining them in the end is faster then concatenating strings.
   var data = [];
 
+  console.log("parsing post");
+  
   req.addListener('data', function(chunk) {
     data.push(chunk);
   });
 
+  console.log("all data collected");
   req.addListener('end', function() {
     callback(querystring.parse(data.join('')));
   });
@@ -127,6 +130,7 @@ app.get('/channel.html', function (req, res) {
 app.post('/', function (req, res) {
 	console.log("POST detected");
 	parse_post(req, handlePOSTData);
+	console.log("Part 2");
 	res.redirect('https://www.facebook.com/dialog/oauth?client_id=369903096353188&redirect_uri=http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/');
 });
 
