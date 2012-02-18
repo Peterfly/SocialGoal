@@ -122,6 +122,7 @@ app.get('/channel.html', function (req, res) {
 });
 
 app.post('/', function (req, res) {
+	console.log("POST detected");
 	parse_post(req, handlePOSTData);
 	res.redirect('https://www.facebook.com/dialog/oauth?client_id=369903096353188&redirect_uri=http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/');
 });
