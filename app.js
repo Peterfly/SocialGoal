@@ -111,9 +111,12 @@ var base64UrlToBase64 = function(str) {
 	return str.replace(/\-/g, '+').replace(/_/g, '/');
 };
 
+function handleAuthData(req, res) {
+	var data = req.params.data;
+	console.log(data);
+}
 
-
-var handlePOSTData = function(req, res) {
+function handlePOSTData(req, res) {
 	var signed_request = req.param('signed_request');
 	var parts = signed_request.split('.');
 	var sig = base64UrlToBase64(parts[0]);
@@ -148,11 +151,15 @@ var handlePOSTData = function(req, res) {
 	console.log(facebook.user_id);
 }
 
+
+
 app.get('/', routes.index);
 
 app.get('/channel.html', function (req, res) {
 	res.sendfile('views/channel.html');
 });
+
+app.get('/?code=data:', handleAuth);
 
 app.get('/fb', handlePOSTData);
 
