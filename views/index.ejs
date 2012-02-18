@@ -9,49 +9,22 @@
   window.fbAsyncInit = function() {
 	FB.init({
 	  appId      : '369903096353188', // App ID
-	  //channelUrl : 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/channel.html', // Channel File
+	  channelUrl : '//ec2-184-169-254-137.us-west-1.compute.amazonaws.com/channel.html', // Channel File
 	  status     : true, // check login status
 	  cookie     : true, // enable cookies to allow the server to access the session
 	  xfbml      : true,  // parse XFBML
 	  oauth		 : true
 	});
 
-	// Additional initialization code here
-	FB.Event.subscribe('auth.login', function(response) {
-        // {
-        //   status: "",         /* Current status of the session */
-        //   authResponse: {          /* Information about the current session */
-        //      userID: ""          /* String representing the current user's ID */
-        //      signedRequest: "",  /* String with the current signedRequest */
-        //      expiresIn: "",      /* UNIX time when the session expires */
-        //      accessToken: "",    /* Access token of the user */
-        //   }
-        // }
-        alert('event status: ' + response.status);
-    });
 	// fetch the status on load
-	//FB.getLoginStatus(handleSessionResponse);
+	FB.getLoginStatus(handleSessionResponse);
 	// handle a session response from any of the auth related calls
-	//function handleSessionResponse() {
-	//	FB.api('/me', function(response) {
-	//		console.log(response);
-	//		$('#user-info').html(response.id + ' - ' + response.name);
-	FB.getLoginStatus(function(response) {
-        //  {
-        //     status: 'connected',
-        //     authResponse: {
-        //        accessToken: '...',
-        //        expiresIn:'...',
-        //        signedRequest:'...',
-        //        userID:'...'
-        //     }
-        //  }
-        alert('getLoginStatus: ' + response.status);
-        if (response.authResponse) {
-            var access_token = response.authResponse.accessToken;
-            alert('Access token yay! ' + access_token);
-        }
-    });
+	function handleSessionResponse() {
+		FB.api('/me', function(response) {
+			console.log(response);
+			$('#user-info').html(response.id + ' - ' + response.name);
+		});
+	}
   };
 
   // Load the SDK Asynchronously
