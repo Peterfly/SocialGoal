@@ -3,7 +3,8 @@
  * Module dependencies.
  */
 var https	= require('https'),
-	crypto	= require('crypto');
+	crypto	= require('crypto'),
+	url 	= require('url');
 	
 var express = require('express')
   , routes = require('./routes');
