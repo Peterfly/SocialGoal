@@ -121,10 +121,10 @@ function handleAuthData(req, res) {
 		var redirect_uri = 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/';
 		var access_token = 'undefined';
 		https.get({host: "graph.facebook.com", 
-								path: "/oauth/access_token?client_id=" + 
-								client_id + "&redirect_uri=" + 
-								redirect_uri + "&client_secret=" + 
-								secret + "&code=" + data }, 
+				   path: "/oauth/access_token?client_id=" + 
+				   client_id + "&redirect_uri=" + 
+				   redirect_uri + "&client_secret=" + 
+				   secret + "&code=" + data }, 
 		function(response) {
 			response.on('data', function (chunk) {
 				access_token = querystring.parse(String(chunk)).access_token;
@@ -138,6 +138,7 @@ function handleAuthData(req, res) {
 						});
 			});
 		});
+	}
 	routes.index(req, res);
 }
 
