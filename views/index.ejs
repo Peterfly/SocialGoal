@@ -2,7 +2,19 @@
 <p>Welcome to <%= title %></p>
 <div id="fb-root"></div>
 
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<span id="user-info" style="border:1px solid #888"></span>
+
 <script>
+   window.fbAsyncInit = function() {
+    FB.init({
+        appId: '369903096353188',
+        status: true,
+        cookie: true,
+        xfbml: true,
+        oauth: true
+    });
+
     FB.Event.subscribe('auth.login', function(response) {
         // {
         //   status: "",         /* Current status of the session */
