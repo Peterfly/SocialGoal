@@ -151,7 +151,7 @@ function handlePOSTData(req, res) {
 	console.log(facebook.user_id);
 }
 
-app.get('/?code=data:', handleAuthData);
+//app.get('/?code=data:', handleAuthData);
 
 app.get('/', routes.index);
 
