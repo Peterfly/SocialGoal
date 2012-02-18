@@ -33,7 +33,7 @@ app.get('/', function (req, res) {
   res.sendfile('views/index.html');
 });
 
-server.post('/', function (req, res) {
+app.post('/', function (req, res) {
 	res.redirect('https://www.facebook.com/dialog/oauth?client_id=369903096353188&redirect_uri=http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/');
 });
 
