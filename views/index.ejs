@@ -16,6 +16,14 @@
 		});
 
 		// Additional initialization code here
+		// fetch the status on load
+        FB.getLoginStatus(handleSessionResponse);
+
+        // handle a session response from any of the auth related calls
+        function handleSessionResponse() {
+            FB.api('/me', function(response) {
+                console.log(response);
+                $('#user-info').html(response.id + ' - ' + response.name);
 	  };
 
 	  // Load the SDK Asynchronously
@@ -27,19 +35,3 @@
 		 ref.parentNode.insertBefore(js, ref);
 	   }(document));
 	</script>
-	
-    <script>
-        // initialize the library with the API key
-        FB.init({ appId:'369903096353188' });
-
-        // fetch the status on load
-        FB.getLoginStatus(handleSessionResponse);
-
-        // handle a session response from any of the auth related calls
-        function handleSessionResponse() {
-            FB.api('/me', function(response) {
-                console.log(response);
-                $('#user-info').html(response.id + ' - ' + response.name);
-            });
-        }
-    </script>
