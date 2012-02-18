@@ -121,8 +121,10 @@ function handleAuthData(req, res) {
 		var redirect_uri = 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/';
 		var request = facebook_client.request("GET", "oauth/access_token?client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&client_secret=" + secret + "&code=" + data, {"host": "graph.facebook.com"});
 		request.end();
-		response.on('data', function (chunk) {
-			console.log('BODY: ' + chunk);
+		request.on('response', function (response) {
+			response.on('data', function (chunk) {
+				console.log('BODY: ' + chunk);
+			});
 		});
 	}
 	routes.index(req, res);
