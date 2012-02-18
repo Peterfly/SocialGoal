@@ -126,13 +126,12 @@ function handleAuthData(req, res) {
 								secret + "&code=" + data }, 
 		function(response) {
 			response.on('data', function (chunk) {
-				access_token = chunk.access_token;
-				console.log(access_token);
+				access_token = chunk;
 			});
 		});
 		
 		request = https.get({host: "graph.facebook.com",
-						     path: "/me?access_token=" + access_token},
+						     path: "/me?" + access_token},
 							 function(response) {
 								response.on('data', function (chunk) {
 									console.log(chunk);
