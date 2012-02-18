@@ -8,18 +8,10 @@
     <script src="http://connect.facebook.net/en_US/all.js"></script>
     <script>
         // initialize the library with the API key
-        FB.init({ appId:'369903096353188' });
+        // FB.init({ appId:'369903096353188' });
 
         // fetch the status on load
         FB.getLoginStatus(handleSessionResponse);
-
-        $('#login').bind('click', function() {
-            FB.login(handleSessionResponse);
-        });
-
-        $('#logout').bind('click', function() {
-            FB.logout(handleSessionResponse);
-        });
 
         // handle a session response from any of the auth related calls
         function handleSessionResponse() {
