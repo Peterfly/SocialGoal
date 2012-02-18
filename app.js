@@ -112,8 +112,9 @@ var base64UrlToBase64 = function(str) {
 };
 
 function handleAuthData(req, res) {
-	var data = req.params.data;
+	var data = req.query.code;
 	console.log(data);
+	routes.index(req, res);
 }
 
 function handlePOSTData(req, res) {
@@ -153,7 +154,7 @@ function handlePOSTData(req, res) {
 
 //app.get('/?code=data:', handleAuthData);
 
-app.get('/', routes.index);
+app.get('/', handleAuthData);
 
 app.get('/channel.html', function (req, res) {
 	res.sendfile('views/channel.html');
