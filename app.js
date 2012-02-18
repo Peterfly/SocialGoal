@@ -69,9 +69,7 @@ console.log("good");
 */
 
 
-app.get('/', function (req, res){
-	res.sendfile(__dirname + '/index.html');
-});
+app.get('/', routes.index);
 
 app.get('/channel.html', function (req, res) {
 	res.sendfile('views/channel.html');

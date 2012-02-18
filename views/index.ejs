@@ -23,14 +23,6 @@
 		FB.api('/me', function(response) {
 			$('#user-info').html(response.id + ' - ' + response.name);
 		});
-		var body = 'Testing my goals...';
-		FB.api('/me/feed', 'post', { message: body }, function(response) {
-			if (!response || response.error) {
-				alert('Error occured');
-			} else {
-			alert('Post ID: ' + response.id);
-			}
-		});
 	}
 
 };
