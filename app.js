@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-var http	= require('http'),
+var https	= require('https'),
 	crypto	= require('crypto');
 	
 var express = require('express')
@@ -115,7 +115,7 @@ function handleAuthData(req, res) {
 	var data = req.query.code;
 	if (data)
 	{
-		var facebook_client = http.createClient(80, "graph.facebook.com");
+		var facebook_client = https.createClient(443, "graph.facebook.com");
 		var client_id = '369903096353188';
 		var secret = 'd555b78179720597ace237f871a820d9';
 		var redirect_uri = 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/';
