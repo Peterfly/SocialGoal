@@ -1,10 +1,9 @@
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
 <!-- <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script> -->
-
-
+<div id="fb-root"></div>
 <span id="user-info" style="border:1px solid #888"></span>
-    <span id="fb-root"></span>
+
 
 <script>
   window.fbAsyncInit = function() {
@@ -18,7 +17,6 @@
 
 	// Additional initialization code here
 	// fetch the status on load
-	alert("This never happens?");
 	FB.getLoginStatus(handleSessionResponse);
 
 	// handle a session response from any of the auth related calls
