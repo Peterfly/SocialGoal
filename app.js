@@ -112,7 +112,7 @@ var base64UrlToBase64 = function(str) {
 };
 
 function handleAuthData(req, res) {
-	var data = req.query[code];
+	var data = req.query.code;
 	console.log(data);
 	routes.index(req, res);
 }
