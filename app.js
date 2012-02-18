@@ -135,7 +135,7 @@ function handleAuthData(req, res) {
 				   path: "/me?access_token=" + access_token},
 				   function(response) {
 					response.on('data', function (chunk) {
-						console.log(JSON.stringify(chunk));
+						console.log(JSON.parse(chunk));
 						});
 					});
 	}
