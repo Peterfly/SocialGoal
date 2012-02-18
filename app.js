@@ -92,6 +92,7 @@ function parse_post(req, callback) {
 
 function handlePOSTData(data) {
 	if (!data.signed_request) {
+		console.log("no signed request");
 		res.end('Error: No signed_request');
 		return;
 	}
@@ -101,6 +102,7 @@ function handlePOSTData(data) {
 
 	if (!facebook.algorithm || (facebook.algorithm.toUpperCase() != 'HMAC-SHA256')) {
 	  res.end('Error: Unknown algorithm');
+	  console.log("unknown algorithm");
 	  return;
 	}
 
@@ -109,6 +111,7 @@ function handlePOSTData(data) {
 
 	if (data[0] != signature) {
 	  res.end('Error: Bad signature');
+	  console.log("bad signature");
 	  return;
 	}
 
