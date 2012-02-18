@@ -1,28 +1,48 @@
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
 <div id="fb-root"></div>
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
-<span id="user-info" style="border:1px solid #888"></span>
 
 <script>
-  window.fbAsyncInit = function() {
-	FB.init({
-	  appId      : '369903096353188', // App ID
-	  channelUrl : 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/channel.html', // Channel File
-	  status     : true, // check login status
-	  cookie     : true, // enable cookies to allow the server to access the session
-	  xfbml      : true,  // parse XFBML
-	  oauth		 : true
-	});
-	alert("Work");
-  }
+    FB.Event.subscribe('auth.login', function(response) {
+        // {
+        //   status: "",         /* Current status of the session */
+        //   authResponse: {          /* Information about the current session */
+        //      userID: ""          /* String representing the current user's ID */
+        //      signedRequest: "",  /* String with the current signedRequest */
+        //      expiresIn: "",      /* UNIX time when the session expires */
+        //      accessToken: "",    /* Access token of the user */
+        //   }
+        // }
+        alert('event status: ' + response.status);
+    });
 
-  // Load the SDK Asynchronously
-  (function(d){
-	 var js, id = 'facebook-jssdk';
-	 if (d.getElementById(id)) {return;}
-	 js = d.createElement('script'); js.id = id; js.async = true;
-	 js.src = "http://connect.facebook.net/en_US/all.js";
-	 d.getElementsByTagName('head')[0].appendChild(js);
-   }(document));
+    FB.getLoginStatus(function(response) {
+        //  {
+        //     status: 'connected',
+        //     authResponse: {
+        //        accessToken: '...',
+        //        expiresIn:'...',
+        //        signedRequest:'...',
+        //        userID:'...'
+        //     }
+        //  }
+        alert('getLoginStatus: ' + response.status);
+        if (response.authResponse) {
+            var access_token = response.authResponse.accessToken;
+            alert('Access token yay! ' + access_token);
+        }
+    });
+
+};
+(function(d) {
+    var js, id = 'facebook-jssdk';
+    if (d.getElementById(id)) {
+        return;
+    }
+    js = d.createElement('script');
+    js.id = id;
+    js.async = true;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    d.getElementsByTagName('head')[0].appendChild(js);
+}(document));
 </script>
