@@ -71,24 +71,24 @@ console.log("good");
 */
 
 var base64ToString = function(str) {
-return (new Buffer(str || "", "base64")).toString("ascii");
+	return (new Buffer(str || "", "base64")).toString("ascii");
 };
 
 var base64UrlToString = function(str) {
-return base64ToString( base64UrlToBase64(str) );
+	return base64ToString( base64UrlToBase64(str) );
 };
 
 var base64UrlToBase64 = function(str) {
-var paddingNeeded = (4- (str.length%4));
-for (var i = 0; i < paddingNeeded; i++) {
-str = str + '=';
-}
-return str.replace(/\-/g, '+').replace(/_/g, '/')
+	var paddingNeeded = (4- (str.length%4));
+	for (var i = 0; i < paddingNeeded; i++) {
+		str = str + '=';
+	}
+	return str.replace(/\-/g, '+').replace(/_/g, '/')
 };
 
 
 
-function handlePOSTData(req, res) {
+var handlePOSTData = function(req, res) {
 	var signed_request = req.param('signed_request');
 	var parts = signed_request.split('.');
 	var sig = base64UrlToBase64(parts[0]);
@@ -109,7 +109,7 @@ function handlePOSTData(req, res) {
 
 	var secret = 'd555b78179720597ace237f871a820d9';
 	// Make sure the data posted is valid and comes from facebook.
-	var hmac = crypto.createHmac('sha256', secret)
+	var hmac = crypto.createHmac('sha256', secret);
 	hmac.update(payload);
 	var expected_sig = digest('base64');
 
