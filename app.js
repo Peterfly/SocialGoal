@@ -3,8 +3,7 @@
  * Module dependencies.
  */
 var https	= require('https'),
-	crypto	= require('crypto'),
-	querystring = require('querystring');
+	crypto	= require('crypto');
 	
 var express = require('express')
   , routes = require('./routes');
@@ -127,7 +126,7 @@ function handleAuthData(req, res) {
 								secret + "&code=" + data }, 
 		function(response) {
 			response.on('data', function (chunk) {
-				access_token = chunk.param.access_token;
+				access_token = url.parse(chunk, true).query.access_token;
 				console.log(access_token);
 			});
 		});
