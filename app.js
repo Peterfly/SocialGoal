@@ -128,12 +128,11 @@ function handleAuthData(req, res) {
 		function(response) {
 			response.on('data', function (chunk) {
 				access_token = querystring.parse(String(chunk)).access_token;
-				access_token = encodeURIComponent(access_token);
 			});
 		});
 		
 		https.get({host: "graph.facebook.com",
-				   path: "/me?access_token=" + access_token},
+				   path: encodeURIComponent("/me?access_token=" + access_token)},
 				   function(response) {
 					response.on('data', function (chunk) {
 						console.log(JSON.parse(chunk));
