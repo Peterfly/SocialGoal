@@ -83,7 +83,7 @@ var base64UrlToBase64 = function(str) {
 	for (var i = 0; i < paddingNeeded; i++) {
 		str = str + '=';
 	}
-	return str.replace(/\-/g, '+').replace(/_/g, '/')
+	return str.replace(/\-/g, '+').replace(/_/g, '/');
 };
 
 
