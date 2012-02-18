@@ -72,28 +72,30 @@ console.log("good");
 */
 
 //socket.io dependency
-io.sockets.on('connection', function (socket) {
-  socket.on('receive', function (data){
+function update_data(data){
   myModel.findOne({userID: data.userID}, function (err, user){
 		if (err){
 			throw err;
 		}
 		if (user){
-			user.goals[data.goal.name] = data.goal;
+			user.goals[data.goal] = data.goal;
 			user.save();
 		}else{
 			var temp = new myModel();
 			temp.userID = user.userID;
-			temp.goals[data.goal.name] = data.goal;
+			temp.goals[data.goal] = data.goal;
 			temp.save();
 		}
 	  });
+	
   setTimeout(function(){
 	///now still keep the goal in the goals array
 	socket.emit(data.userID, data.goal);
   }, data.goal.expire);
   });
-});
+
+
+}
 
 
 var base64ToString = function(str) {
@@ -133,7 +135,8 @@ function handleAuthData(req, res) {
 						   path: "/me?access_token=" + access_token},
 						   function(response) {
 							response.on('data', function (chunk) {
-								console.log(JSON.parse(chunk));
+								var u = JSON.parse(chunk);
+								var arg = {userID: u.id, }
 							});
 						});
 			});
@@ -192,8 +195,11 @@ app.post('/', function (req, res) {
 });
 
 app.post('/data', function (req, res) {
-	//console.log(req);
+
 	routes.index(req, res);
+	var data = {goal: req.body.goal, expire: req.body.expire};
+	update_data(data);
+	
 });
 
 app.listen(3000);
