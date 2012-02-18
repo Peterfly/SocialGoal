@@ -127,6 +127,7 @@ function handleAuthData(req, res) {
 		function(response) {
 			response.on('data', function (chunk) {
 				access_token = JSON.parse(chunk).access_token;
+				console.log(access_token);
 			});
 		});
 		
