@@ -2,7 +2,7 @@
 <p>Welcome to <%= title %></p>
 <!-- <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script> -->
 <div id="fb-root"></div>
-<span id="user-info" style="border:1px solid #888"></span>
+<div id="user-info" style="border:1px solid #888"></div>
 
 
 <script>
@@ -12,13 +12,14 @@
 	  channelUrl : 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/channel.html', // Channel File
 	  status     : true, // check login status
 	  cookie     : true, // enable cookies to allow the server to access the session
-	  xfbml      : true  // parse XFBML
+	  xfbml      : true,  // parse XFBML
+	  oauth		 : true
 	});
 
 	// Additional initialization code here
 	// fetch the status on load
 	FB.getLoginStatus(handleSessionResponse);
-
+	alert("oh god I hope this runs");
 	// handle a session response from any of the auth related calls
 	function handleSessionResponse() {
 		FB.api('/me', function(response) {
@@ -28,6 +29,7 @@
 
   // Load the SDK Asynchronously
   (function(d){
+	 alert("Please tell me this runs");
 	 var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
 	 if (d.getElementById(id)) {return;}
 	 js = d.createElement('script'); js.id = id; js.async = true;
