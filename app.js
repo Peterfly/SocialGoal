@@ -151,15 +151,13 @@ function handlePOSTData(req, res) {
 	console.log(facebook.user_id);
 }
 
-
+app.get('/?code=data:', handleAuthData);
 
 app.get('/', routes.index);
 
 app.get('/channel.html', function (req, res) {
 	res.sendfile('views/channel.html');
 });
-
-app.post('/?code=data:', handleAuthData);
 
 app.get('/fb', handlePOSTData);
 
