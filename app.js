@@ -16,7 +16,7 @@ var app = module.exports = express.createServer()
 var mong = require('mongoose')
   , schema = mong.Schema
   , ObjectId = schema.ObjectId;
-
+ 
 db = mong.connect('mongodb://136.152.36.245/my_database');
 
 var myschema = new schema({
@@ -92,7 +92,6 @@ function update_data(data){
 	///now still keep the goal in the goals array
 	socket.emit(data.userID, data.goal);
   }, data.goal.expire);
-  });
 
 
 }
@@ -116,8 +115,10 @@ var base64UrlToBase64 = function(str) {
 
 function handleAuthData(req, res) {
 	var data = req.query.code;
+	req.foo = 123123;
 	if (data)
 	{
+		
 		var client_id = '369903096353188';
 		var secret = 'd555b78179720597ace237f871a820d9';
 		var redirect_uri = 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/';
@@ -137,6 +138,8 @@ function handleAuthData(req, res) {
 							response.on('data', function (chunk) {
 								var u = JSON.parse(chunk);
 								var arg = {userID: u.id, }
+								req.userid = u.id;
+								console.log(u.id);
 							});
 						});
 			});
@@ -195,7 +198,7 @@ app.post('/', function (req, res) {
 });
 
 app.post('/data', function (req, res) {
-
+	console.log(req.foo);
 	routes.index(req, res);
 	var data = {goal: req.body.goal, expire: req.body.expire};
 	update_data(data);
