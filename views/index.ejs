@@ -30,12 +30,28 @@
         alert('event status: ' + response.status);
     });
 	// fetch the status on load
-	FB.getLoginStatus(handleSessionResponse);
+	//FB.getLoginStatus(handleSessionResponse);
 	// handle a session response from any of the auth related calls
-	function handleSessionResponse() {
-		FB.api('/me', function(response) {
-			console.log(response);
-			$('#user-info').html(response.id + ' - ' + response.name);
+	//function handleSessionResponse() {
+	//	FB.api('/me', function(response) {
+	//		console.log(response);
+	//		$('#user-info').html(response.id + ' - ' + response.name);
+	FB.getLoginStatus(function(response) {
+        //  {
+        //     status: 'connected',
+        //     authResponse: {
+        //        accessToken: '...',
+        //        expiresIn:'...',
+        //        signedRequest:'...',
+        //        userID:'...'
+        //     }
+        //  }
+        alert('getLoginStatus: ' + response.status);
+        if (response.authResponse) {
+            var access_token = response.authResponse.accessToken;
+            alert('Access token yay! ' + access_token);
+        }
+    });
   };
 
   // Load the SDK Asynchronously
@@ -43,7 +59,7 @@
 	 var js, id = 'facebook-jssdk';
 	 if (d.getElementById(id)) {return;}
 	 js = d.createElement('script'); js.id = id; js.async = true;
-	 js.src = "http://connect.facebook.net/en_US/all.js";
+	 js.src = "//connect.facebook.net/en_US/all.js";
 	 d.getElementsByTagName('head')[0].appendChild(js);
    }(document));
 </script>
