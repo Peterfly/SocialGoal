@@ -3,7 +3,6 @@
  * Module dependencies.
  */
 var http	= require('http'),
-	querystring = require('querystring'),
 	crypto	= require('crypto');
 	
 var express = require('express')
@@ -71,49 +70,50 @@ console.log("first step");
 console.log("good");
 */
 
-// Simple function to decode a base64url encoded string.
-function base64_url_decode(data) {
-  return new Buffer(data.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('ascii');
+var base64ToString = function(str) {
+return (new Buffer(str || "", "base64")).toString("ascii");
+};
+
+var base64UrlToString = function(str) {
+return base64ToString( base64UrlToBase64(str) );
+};
+
+var base64UrlToBase64 = function(str) {
+var paddingNeeded = (4- (str.length%4));
+for (var i = 0; i < paddingNeeded; i++) {
+str = str + '=';
 }
+return str.replace(/\-/g, '+').replace(/_/g, '/')
+};
 
-// Wait for and parse POST data
-function parse_post(req, callback) {
-  // Pushing things into an array and joining them in the end is faster then concatenating strings.
-  var data = [];
 
-  console.log("parsing post");
-  
-  req.addListener('data', function(chunk) {
-    data.push(chunk);
-  });
 
-  console.log("all data collected");
-  console.log(data);
-  req.addListener('end', function() {
-    callback(querystring.parse(data.join('')));
-  });
-}
-
-function handlePOSTData(data) {
-	if (!data.signed_request) {
-		console.log("no signed request");
-		res.end('Error: No signed_request');
-		return;
+function handlePOSTData(req, res) {
+	var signed_request = req.param('signed_request');
+	var parts = signed_request.split('.');
+	var sig = base64UrlToBase64(parts[0]);
+	var payload = parts[1];
+	var data = JSON.parse(base64UrlToString(payload));
+	
+	if (!data.userid)
+	{
+		res.redirect('https://www.facebook.com/dialog/oauth?client_id=369903096353188&redirect_uri=http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/');
 	}
-	data = data.signed_request.split('.', 2);
+	else
+	{
+		if (data.algorithm.toUpperCase() != 'HMAC-SHA256')) {
+		  res.end('Error: Unknown algorithm');
+		  console.log("unknown algorithm");
+		  return;
+		}
 
-	var facebook = JSON.parse(base64_url_decode(data[1])); // The second string is a base64url encoded json object
-
-	if (!facebook.algorithm || (facebook.algorithm.toUpperCase() != 'HMAC-SHA256')) {
-	  res.end('Error: Unknown algorithm');
-	  console.log("unknown algorithm");
-	  return;
-	}
-
+	var secret = 'd555b78179720597ace237f871a820d9';
 	// Make sure the data posted is valid and comes from facebook.
-	var signature = crypto.createHmac('sha256', 'd555b78179720597ace237f871a820d9').update(data[1]).digest('base64').replace(/\+/g, '-').replace(/\//g, '_').replace('=', '');
+	var hmac = crypto.createHmac('sha256', secret)
+	hmac.update(payload);
+	var expected_sig = digest('base64');
 
-	if (data[0] != signature) {
+	if (sig != signature) {
 	  res.end('Error: Bad signature');
 	  console.log("bad signature");
 	  return;
@@ -128,11 +128,10 @@ app.get('/channel.html', function (req, res) {
 	res.sendfile('views/channel.html');
 });
 
+app.get('/fb', handlePOSTData);
+
 app.post('/', function (req, res) {
-	console.log("POST detected");
-	parse_post(req, handlePOSTData);
-	console.log("Part 2");
-	res.redirect('https://www.facebook.com/dialog/oauth?client_id=369903096353188&redirect_uri=http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/');
+	
 });
 
 app.listen(3000);
