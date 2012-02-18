@@ -88,6 +88,7 @@ function parse_post(req, callback) {
   });
 
   console.log("all data collected");
+  console.log(data);
   req.addListener('end', function() {
     callback(querystring.parse(data.join('')));
   });
