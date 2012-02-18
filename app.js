@@ -129,7 +129,7 @@ function handleAuthData(req, res) {
 			response.on('data', function (chunk) {
 				//access_token = querystring.parse(chunk, sep='&', eq='=');
 				//console.log(access_token);
-				console.log(type(chunk));
+				console.log(typeof(chunk));
 			});
 		});
 		
