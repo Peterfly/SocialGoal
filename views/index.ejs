@@ -1,6 +1,5 @@
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
-<div id="fb-root"></div>
 
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
 <span id="user-info" style="border:1px solid #888"></span>
@@ -38,3 +37,14 @@
     d.getElementsByTagName('head')[0].appendChild(js);
 }(document));
 </script>
+
+<form id="goal_input" action="data" method="post">
+        <div>
+            <label for="goal">goal: </label>
+            <input type="text" id="goal" name="goal"></input>
+			
+			<label for="expire">in how long: </label>
+            <input type="text" id="expire" name="expire"></input>
+        </div>
+<input type="submit" value="Submit"></input>
+</form>
