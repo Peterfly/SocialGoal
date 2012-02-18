@@ -1,6 +1,29 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #FFD700;
+  background color: #E0FFFF;
+}
+
+.button{
+	width:70px;
+	font-size: 10px;
+	line-height: 20px;
+	font-family: Tahoma;
+	box-shadow: 3px 3px 2px #aaa;
+	border-radius: 2px;
+	text-shadow: #aaa;
+	color: #800000;
+	background-color: #def;
+	transition: all 500ms;
+	-moz-transition: all 500ms;
+	-webkit-transition: all 500ms; 
+	-o-transition: background-color 300ms; 
+	cursor:pointer;
+}
+.button:hover{
+	background-color: #000000;
+	color: #800000;
 }
 
 a {
