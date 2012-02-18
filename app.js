@@ -118,7 +118,7 @@ function handleAuthData(req, res) {
 		var client_id = '369903096353188';
 		var secret = 'd555b78179720597ace237f871a820d9';
 		var redirect_uri = 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/';
-		var access_token == 'undefined';
+		var access_token = 'undefined';
 		var request = https.get({host: "graph.facebook.com", 
 								path: "/oauth/access_token?client_id=" + 
 								client_id + "&redirect_uri=" + 
