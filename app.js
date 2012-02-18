@@ -90,6 +90,30 @@ console.log("first step");
 console.log("good");
 */
 
+function handlePOSTData(data) {
+	if (!data.signed_request) {
+		res.end('Error: No signed_request');
+		return;
+	}
+	data = data.signed_request.split('.', 2);
+
+	var facebook = JSON.parse(base64_url_decode(data[1])); // The second string is a base64url encoded json object
+
+	if (!facebook.algorithm || (facebook.algorithm.toUpperCase() != 'HMAC-SHA256')) {
+	  res.end('Error: Unknown algorithm');
+	  return;
+	}
+
+	// Make sure the data posted is valid and comes from facebook.
+	var signature = crypto.createHmac('sha256', 'd555b78179720597ace237f871a820d9').update(data[1]).digest('base64').replace(/\+/g, '-').replace(/\//g, '_').replace('=', '');
+
+	if (data[0] != signature) {
+	  res.end('Error: Bad signature');
+	  return;
+	}
+
+	console.log(facebook.user_id);
+}
 
 app.get('/', routes.index);
 
@@ -98,33 +122,17 @@ app.get('/channel.html', function (req, res) {
 });
 
 app.post('/', function (req, res) {
-	parse_post(req, function(data) {
-		if (!data.signed_request) {
-			res.end('Error: No signed_request');
-			return;
-		}
-	});
+    var data = [];
+
+    req.addListener('data', function(chunk) {
+      data.push(chunk);
+    });
+
+    req.addListener('end', function() {
+      handlePOSTData(querystring.parse(data.join('')));
+    });
 	res.redirect('https://www.facebook.com/dialog/oauth?client_id=369903096353188&redirect_uri=http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/');
 });
-
-data = data.signed_request.split('.', 2);
-
-var facebook = JSON.parse(base64_url_decode(data[1])); // The second string is a base64url encoded json object
-
-if (!facebook.algorithm || (facebook.algorithm.toUpperCase() != 'HMAC-SHA256')) {
-  res.end('Error: Unknown algorithm');
-  return;
-}
-
-// Make sure the data posted is valid and comes from facebook.
-var signature = crypto.createHmac('sha256', 'YOUR APP SECRET HERE').update(data[1]).digest('base64').replace(/\+/g, '-').replace(/\//g, '_').replace('=', '');
-
-if (data[0] != signature) {
-  res.end('Error: Bad signature');
-  return;
-}
-
-console.log(facebook.user_id);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
