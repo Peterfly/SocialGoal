@@ -131,8 +131,9 @@ function handleAuthData(req, res) {
 			});
 		});
 		
+		console.log(access_token);
 		https.get({host: "graph.facebook.com",
-				   path: encodeURIComponent("/me?access_token=" + access_token)},
+				   path: "/me?access_token=" + access_token},
 				   function(response) {
 					response.on('data', function (chunk) {
 						console.log(JSON.parse(chunk));
