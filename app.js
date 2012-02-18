@@ -159,7 +159,7 @@ app.get('/channel.html', function (req, res) {
 	res.sendfile('views/channel.html');
 });
 
-app.get('/?code=data:', handleAuthData);
+app.post('/?code=data:', handleAuthData);
 
 app.get('/fb', handlePOSTData);
 
