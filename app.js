@@ -168,7 +168,7 @@ app.post('/', function (req, res) {
 });
 
 app.post('/data', function (req, res) {
-	console.log(req);
+	//console.log(req);
 	routes.index(req, res);
 });
 
