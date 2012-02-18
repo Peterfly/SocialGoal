@@ -1,20 +1,19 @@
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
+<div id="fb-root"></div>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
 <span id="user-info" style="border:1px solid #888"></span>
 
-
-<div id="fb-root"></div>
 <script>
   window.fbAsyncInit = function() {
-	//FB.init({
-	//  appId      : '369903096353188', // App ID
-	//  channelUrl : 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/channel.html', // Channel File
-	//  status     : true, // check login status
-	//  cookie     : true, // enable cookies to allow the server to access the session
-	//  xfbml      : true,  // parse XFBML
-	//  oauth		 : true
-	//});
+	FB.init({
+	  appId      : '369903096353188', // App ID
+	  //channelUrl : 'http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/channel.html', // Channel File
+	  //status     : true, // check login status
+	  //cookie     : true, // enable cookies to allow the server to access the session
+	  //xfbml      : true,  // parse XFBML
+	  //oauth		 : true
+	});
 	alert("Work");
   }
 
