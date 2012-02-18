@@ -136,7 +136,6 @@ function handleAuthData(req, res) {
 						console.log(JSON.parse(chunk));
 						});
 					});
-				}
 			});
 		});
 		
