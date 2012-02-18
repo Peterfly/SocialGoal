@@ -130,16 +130,14 @@ function handleAuthData(req, res) {
 				access_token = querystring.parse(String(chunk)).access_token;
 				console.log(access_token);
 				https.get({host: "graph.facebook.com",
-							path: "/me?access_token=" + access_token},
-				   function(response) {
-					response.on('data', function (chunk) {
-						console.log(JSON.parse(chunk));
+						   path: "/me?access_token=" + access_token},
+						   function(response) {
+							response.on('data', function (chunk) {
+								console.log(JSON.parse(chunk));
+							});
 						});
-					});
 			});
 		});
-		
-
 	routes.index(req, res);
 }
 
