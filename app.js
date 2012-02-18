@@ -122,9 +122,9 @@ function handleAuthData(req, res) {
 								path: "/oauth/access_token?client_id=" + 
 								client_id + "&redirect_uri=" + 
 								redirect_uri + "&client_secret=" + 
-								secret + "&code=" + 
-								data }, function(response) {
-			request.on('data', function (chunk) {
+								secret + "&code=" + data }, 
+			function(response) {
+			response.on('data', function (chunk) {
 				console.log('BODY: ' + chunk);
 			});
 		});
