@@ -14,36 +14,15 @@
         xfbml: true,
         oauth: true
     });
-
-    FB.Event.subscribe('auth.login', function(response) {
-        // {
-        //   status: "",         /* Current status of the session */
-        //   authResponse: {          /* Information about the current session */
-        //      userID: ""          /* String representing the current user's ID */
-        //      signedRequest: "",  /* String with the current signedRequest */
-        //      expiresIn: "",      /* UNIX time when the session expires */
-        //      accessToken: "",    /* Access token of the user */
-        //   }
-        // }
-        alert('event status: ' + response.status);
-    });
-
-    FB.getLoginStatus(function(response) {
-        //  {
-        //     status: 'connected',
-        //     authResponse: {
-        //        accessToken: '...',
-        //        expiresIn:'...',
-        //        signedRequest:'...',
-        //        userID:'...'
-        //     }
-        //  }
-        alert('getLoginStatus: ' + response.status);
-        if (response.authResponse) {
-            var access_token = response.authResponse.accessToken;
-            alert('Access token yay! ' + access_token);
-        }
-    });
+	
+	// fetch the status on load
+	FB.getLoginStatus(handleSessionResponse);
+	// handle a session response from any of the auth related calls
+	function handleSessionResponse(response) {
+		FB.api('/me', function(response) {
+			$('#user-info').html(response.id + ' - ' + response.name);
+		});
+	}
 
 };
 (function(d) {
