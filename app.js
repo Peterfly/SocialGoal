@@ -160,5 +160,10 @@ app.post('/', function (req, res) {
 	res.redirect('https://www.facebook.com/dialog/oauth?client_id=369903096353188&redirect_uri=http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/');
 });
 
+app.post('/data', function (req, res) {
+	console.log(req);
+	routes.index(req, res);
+});
+
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
