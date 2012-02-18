@@ -12,25 +12,6 @@ var lab = 1;
 var app = module.exports = express.createServer()
   , io = require('socket.io').listen(app);
 
-// Simple function to decode a base64url encoded string.
-function base64_url_decode(data) {
-  return new Buffer(data.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('ascii');
-}
-
-// Wait for and parse POST data
-function parse_post(req, callback) {
-  // Pushing things into an array and joining them in the end is faster then concatenating strings.
-  var data = [];
-
-  req.addListener('data', function(chunk) {
-    data.push(chunk);
-  });
-
-  req.addListener('end', function() {
-    callback(querystring.parse(data.join('')));
-  });
-}
-
 ///database initialized
 var mong = require('mongoose')
   , schema = mong.Schema
@@ -90,6 +71,25 @@ console.log("first step");
 console.log("good");
 */
 
+// Simple function to decode a base64url encoded string.
+function base64_url_decode(data) {
+  return new Buffer(data.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('ascii');
+}
+
+// Wait for and parse POST data
+function parse_post(req, callback) {
+  // Pushing things into an array and joining them in the end is faster then concatenating strings.
+  var data = [];
+
+  req.addListener('data', function(chunk) {
+    data.push(chunk);
+  });
+
+  req.addListener('end', function() {
+    callback(querystring.parse(data.join('')));
+  });
+}
+
 function handlePOSTData(data) {
 	if (!data.signed_request) {
 		res.end('Error: No signed_request');
@@ -122,7 +122,7 @@ app.get('/channel.html', function (req, res) {
 });
 
 app.post('/', function (req, res) {
-	parsePost(req, handlePOSTData);
+	parse_post(req, handlePOSTData);
 	res.redirect('https://www.facebook.com/dialog/oauth?client_id=369903096353188&redirect_uri=http://ec2-184-169-254-137.us-west-1.compute.amazonaws.com/');
 });
 
