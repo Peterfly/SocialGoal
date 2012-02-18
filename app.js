@@ -106,6 +106,7 @@ var handlePOSTData = function(req, res) {
 		  console.log("unknown algorithm");
 		  return;
 		}
+	}
 
 	var secret = 'd555b78179720597ace237f871a820d9';
 	// Make sure the data posted is valid and comes from facebook.
