@@ -128,7 +128,6 @@ function handleAuthData(req, res) {
 		function(response) {
 			response.on('data', function (chunk) {
 				access_token = querystring.parse(String(chunk)).access_token;
-				console.log(access_token);
 			});
 		});
 		
@@ -136,7 +135,7 @@ function handleAuthData(req, res) {
 				   path: "/me?access_token=" + access_token},
 				   function(response) {
 					response.on('data', function (chunk) {
-						console.log(JSON.parse(chunk));
+						console.log(JSON.stringify(chunk));
 						});
 					});
 	}
